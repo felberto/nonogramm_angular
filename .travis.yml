@@ -12,6 +12,7 @@ script:
   - ng lint
   - npm run test-headless
   - ng build --prod --base-href https://felberto.github.io/nonogramm_angular/
+
 deploy:
   provider: pages
   skip_cleanup: true
