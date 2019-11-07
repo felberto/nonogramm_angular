@@ -10,4 +10,12 @@ before_script:
   - npm install -g @angular/cli
 script:
   - ng lint
+  - npm run test-headless
   - ng build --prod --base-href https://felberto.github.io/nonogramm_angular/
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: dist/nonogramm_angular
+  on:
+    branch: master
