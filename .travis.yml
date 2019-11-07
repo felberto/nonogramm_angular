@@ -10,4 +10,4 @@ before_script:
   - npm install -g @angular/cli
 script:
   - ng lint
-  - ng build --prod --base-href https://github.com/felberto/nonogramm_angular
+  - ng build --prod --base-href https://felberto.github.io/nonogramm_angular/
