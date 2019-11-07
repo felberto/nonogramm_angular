@@ -11,8 +11,8 @@ before_script:
 script:
   - ng lint
   - npm run test-headless
-  - cd dist/nonogramm_angular
   - ng build --prod --base-href https://felberto.github.io/nonogramm_angular/
+  - cd dist/nonogramm_angular
 
 deploy:
   provider: pages
