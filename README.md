@@ -1,12 +1,12 @@
-#Nonogramm
+# Nonogramm
 
-##Frontend
+## Frontend
 [README.md](./frontend/README.md)
 
-##Backend
+## Backend
 [README.md](./backend/README.md)
 
-##MongoDB
+## MongoDB
 
-###Import games as json file
+### Import games as json file
 `mongoimport --db nonogramm --collection games --drop --file games.json --jsonArray`
