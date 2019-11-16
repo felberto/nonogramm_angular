@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
 });
 
 // Getting all games by type
-router.get('/:type', async (req, res) => {
+router.get('/type/:type', async (req, res) => {
     try {
         const games = await Game.find({'type': req.params.type});
         res.json(games)

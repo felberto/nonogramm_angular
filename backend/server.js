@@ -12,4 +12,4 @@ app.use(express.json());
 const gameRoute = require('./routes/game.route');
 app.use('/api/game', gameRoute);
 
-app.listen(3000, () => console.log('server started'));
+app.listen(8080, () => console.log('server started'));
