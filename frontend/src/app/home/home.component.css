@@ -26,6 +26,34 @@
   justify-content: center;
 }
 
+.button {
+  width: 100%;
+  height: 100%;
+  color: #645E9D;
+  border: 0.3vw solid #645E9D;
+  margin: 5%;
+  font-size: 40px;
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+}
+
+.button:hover {
+  background-color: #645E9D;
+  color: white;
+}
+
+.center {
+  margin: auto;
+  width: 100%;
+  height: 30%;
+  padding: 5px;
+}
+
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 600px) {
   .column {
