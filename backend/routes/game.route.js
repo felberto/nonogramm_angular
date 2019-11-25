@@ -1,35 +1,12 @@
-const express = require('express');
-const router = express.Router();
-const Game = require('../models/game');
+module.exports = (app) => {
+    const gameController = require('../controllers/game.controller');
 
-// Getting all games
-router.get('/', async (req, res) => {
-    try {
-        const games = await Game.find();
-        res.json(games)
-    } catch (err) {
-        res.status(500).json({message: err.message})
-    }
-});
+    // Get all games
+    app.get('/api/game/', gameController.findAll);
 
-// Getting all games by type
-router.get('/type/:type', async (req, res) => {
-    try {
-        const games = await Game.find({'type': req.params.type});
-        res.json(games)
-    } catch (err) {
-        res.status(500).json({message: err.message})
-    }
-});
+    // Get all by type
+    app.get('/api/game/type/:type', gameController.findAllByType);
 
-// Getting one game by id
-router.get('/:game_id', async (req, res) => {
-    try {
-        const game = await Game.findOne({'game_id': req.params.game_id});
-        res.json(game)
-    } catch (err) {
-        res.status(500).json({message: err.message})
-    }
-});
-
-module.exports = router;
+    // Get all by id
+    app.get('/api/game/:game_id', gameController.findOne);
+};
