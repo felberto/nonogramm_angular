@@ -1,19 +1,56 @@
 import {Component, OnInit} from "@angular/core";
+import {GameService} from "../core/services/game.service";
+import {Game} from "../core/models/game";
 
 @Component({
   selector: 'board',
-  templateUrl: './board.component.html'
+  templateUrl: './board.component.html',
+  styleUrls: ['./game.component.css']
 })
 export class BoardComponent implements OnInit {
 
-  // todo: remove (for test only)
-  private buttons: string[] = ["b1_1", "b1_2", "b1_3", "b1_4", "b1_5",
-    "b2_1", "b2_2", "b2_3", "b2_4", "b2_5",
-    "b3_1", "b3_2", "b3_3", "b3_4", "b3_5",
-    "b4_1", "b4_2", "b4_3", "b4_4", "b4_5",
-    "b5_1", "b5_2", "b5_3", "b5_4", "b5_5"];
+  private games: Game[];
+  private cols;
+  private rows;
 
-  ngOnInit(): void {
+  constructor(private gameService: GameService) {
   }
 
+  ngOnInit() {
+    this.gameService.getAllByType("10x10").subscribe(res => {
+      this.games = res.body;
+      this.cols = this.games[0].columns;
+      this.rows = this.games[0].rows;
+
+      // create 1D array for the row labels
+      var newArrRows = this.rows;
+      for (var i = 0; i < this.rows.length; i++) {
+        if (this.rows[i].length > 1) {
+          var row = "";
+          for (var j = 0; j < this.rows[i].length; j++) {
+            row = row.concat(" " + this.rows[i][j]);
+          }
+          newArrRows[i] = row.trim();
+        } else {
+          newArrRows[i] = "" + this.rows[i][0];
+        }
+      }
+      this.rows = newArrRows;
+
+      // create 1D array for the column labels
+      var newArrColumns = [this.cols.length];
+      for (var i = 0; i < this.cols.length; i++) {
+        if (this.cols[i].length > 1) {
+          var col = "";
+          for (var j = 0; j < this.cols[i].length; j++) {
+            col = col.concat(" " + this.cols[i][j]);
+          }
+          newArrColumns[i] = col.trim();
+        } else {
+          newArrColumns[i] = "" + this.cols[i][0];
+        }
+      }
+      this.cols = newArrColumns;
+    });
+  }
 }

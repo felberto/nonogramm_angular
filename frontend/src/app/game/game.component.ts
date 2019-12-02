@@ -12,10 +12,6 @@ export class GameComponent implements OnInit {
   }
 
   ngOnInit() {
-    //Only for testing api
-    this.gameService.getAllByType("10x10").subscribe(res => {
-      console.log(res.body);
-    })
   }
 
 }

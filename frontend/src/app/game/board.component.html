@@ -1,7 +1,16 @@
-<div class="center" style="width: 15em; height: 15em">
-  <mat-grid-list cols="5" rowHeight="3em">
-    <mat-grid-tile *ngFor="let btn of buttons">
-      <button mat-button>{{btn}}</button>
-    </mat-grid-tile>
-  </mat-grid-list>
+<div class="container pt-5" style="min-width: 560px;">
+  <div *ngFor="let item of rows; let i=index;" class="row labelBoardRow">
+    <div class="col-2 pt-2">
+      {{item}}
+    </div>
+    <div *ngFor="let r of cols; let k=index;" class="col" style="flex-grow: 0; padding: 0.1em;">
+      <button class="btn-style-board">{{i}},{{k}}</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-2"></div>
+    <div *ngFor="let item of cols" class="labelBoardColumn">
+      {{item}}
+    </div>
+  </div>
 </div>

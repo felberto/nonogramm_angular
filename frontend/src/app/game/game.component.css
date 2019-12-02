@@ -1,0 +1,26 @@
+.btn-style-board {
+  height: 35px;
+  width: 35px;
+  font-size: 9px;
+  background: none;
+  border: 1px solid #645E9D;
+  color: #645E9D;
+  cursor: pointer;
+}
+
+.labelBoardColumn {
+  writing-mode: vertical-lr;
+  text-orientation: upright;
+  flex-grow: 0;
+  -webkit-box-flex: 0;
+  width: 35px;
+  padding: 1em 0.1em 0.1em 0.15em;
+  box-sizing: unset;
+  color: white;
+}
+
+.labelBoardRow {
+  text-align: right;
+  letter-spacing: 0.25em;
+  color: white;
+}
