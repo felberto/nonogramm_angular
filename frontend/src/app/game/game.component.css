@@ -1,11 +1,15 @@
 .btn-style-board {
   height: 35px;
   width: 35px;
-  font-size: 9px;
+  font-weight: bold;
   background: none;
   border: 1px solid #645E9D;
   color: #645E9D;
   cursor: pointer;
+}
+
+.btn-marked {
+  background: #645E9D;
 }
 
 .labelBoardColumn {

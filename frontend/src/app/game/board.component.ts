@@ -2,6 +2,12 @@ import {Component, OnInit} from "@angular/core";
 import {GameService} from "../core/services/game.service";
 import {Game} from "../core/models/game";
 
+enum State {
+  UNDEFINED,
+  MARKED,
+  SPACE
+}
+
 @Component({
   selector: 'board',
   templateUrl: './board.component.html',
@@ -9,9 +15,11 @@ import {Game} from "../core/models/game";
 })
 export class BoardComponent implements OnInit {
 
+  private gameId = 0;
   private games: Game[];
   private cols;
   private rows;
+  private board: State[][];
 
   constructor(private gameService: GameService) {
   }
@@ -19,8 +27,8 @@ export class BoardComponent implements OnInit {
   ngOnInit() {
     this.gameService.getAllByType("10x10").subscribe(res => {
       this.games = res.body;
-      this.cols = this.games[0].columns;
-      this.rows = this.games[0].rows;
+      this.cols = this.games[this.gameId].columns;
+      this.rows = this.games[this.gameId].rows;
 
       // create 1D array for the row labels
       var newArrRows = this.rows;
@@ -51,6 +59,26 @@ export class BoardComponent implements OnInit {
         }
       }
       this.cols = newArrColumns;
+
+      let rowLength = this.rows.length;
+      let colLength = this.cols.length;
+      this.board = new Array(rowLength).fill(State.UNDEFINED).map(() => new Array(colLength).fill(State.UNDEFINED));
     });
+  }
+
+  private clickButton(i: number, j: number) {
+    let btn = this.board[i][j];
+
+    switch (btn) {
+      case State.UNDEFINED:
+        this.board[i][j] = State.MARKED;
+        break;
+      case State.MARKED:
+        this.board[i][j] = State.SPACE;
+        break;
+      case State.SPACE:
+        this.board[i][j] = State.UNDEFINED;
+        break;
+    }
   }
 }
