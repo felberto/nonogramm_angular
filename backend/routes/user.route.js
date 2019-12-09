@@ -3,4 +3,6 @@ module.exports = (app) => {
 
     // Create user
     app.post('/api/user/', userController.create);
+    // Login
+    app.post('/api/user/authenticate', userController.login);
 };

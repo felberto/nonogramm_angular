@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {UserService} from "../core/services/user.service";
 import {first} from "rxjs/operators";
+import {AuthenticationService} from "../core/services/authentication.service";
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ export class LoginComponent implements OnInit {
   userForm: FormGroup;
   submitted = false;
 
-  constructor(public activeModal: NgbActiveModal, private formBuilder: FormBuilder, private router: Router, private userService: UserService) {
+  constructor(public activeModal: NgbActiveModal, private formBuilder: FormBuilder, private router: Router, private userService: UserService, private authService: AuthenticationService) {
 
   }
 
@@ -32,7 +33,18 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    this.authService.login(this.userForm.value)
+      .subscribe(data => {
+          if (data != null) {
+            this.activeModal.dismiss();
+            this.router.navigate(['/game']);
+          } else {
 
+          }
+        }, err => {
+          console.log('error')
+        }
+      )
   }
 
   register() {
@@ -47,8 +59,8 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-
           this.router.navigate(['/game']);
+          this.activeModal.close();
         },
         error => {
           console.log('error');

@@ -38,3 +38,33 @@ exports.create = (req, res) => {
         });
     });
 };
+
+// Login
+exports.login = (req, res) => {
+    // Validate request
+    if (!req.body.username && !req.body.password) {
+        return res.status(400).send({
+            message: "User can not be empty."
+        });
+    }
+
+    // Check if user exists and password match
+    User.findOne({'username': req.body.username}).then(
+        checkUser => {
+            if (checkUser != null) {
+                if (req.body.password === checkUser.password) {
+                    res.send(checkUser);
+                } else {
+                    return res.status(401).send({
+                        message: "Login failed."
+                    });
+                }
+                return res.status(409).send({
+                    message: "User already exists."
+                });
+            } else {
+                console.log("User doesnt exist")
+            }
+        }
+    );
+};
