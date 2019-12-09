@@ -6,6 +6,7 @@
   border: 1px solid #645E9D;
   color: #645E9D;
   cursor: pointer;
+  outline: none;
 }
 
 .btn-marked {
