@@ -4,7 +4,9 @@ body, html {
 }
 
 body {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
   background-image: linear-gradient(to bottom right, #645E9D, #98D0C8);
   background-repeat: no-repeat;
-  font-family: Arial, sans-serif;
 }
