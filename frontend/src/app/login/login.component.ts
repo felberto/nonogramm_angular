@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {Router} from "@angular/router";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {UserService} from "../core/services/user.service";
+import {first} from "rxjs/operators";
 
 @Component({
   selector: 'app-login',
@@ -10,20 +12,20 @@ import {Router} from "@angular/router";
 })
 export class LoginComponent implements OnInit {
 
-  loginForm: FormGroup;
+  userForm: FormGroup;
   submitted = false;
 
-  constructor(public activeModal: NgbActiveModal, private formBuilder: FormBuilder, private router: Router) {
+  constructor(public activeModal: NgbActiveModal, private formBuilder: FormBuilder, private router: Router, private userService: UserService) {
 
   }
 
   // convenience getter for easy access to form fields
   get f() {
-    return this.loginForm.controls;
+    return this.userForm.controls;
   }
 
   ngOnInit() {
-    this.loginForm = this.formBuilder.group({
+    this.userForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
@@ -34,7 +36,23 @@ export class LoginComponent implements OnInit {
   }
 
   register() {
+    this.submitted = true;
 
+    // stop here if form is invalid
+    if (this.userForm.invalid) {
+      return;
+    }
+
+    this.userService.save(this.userForm.value)
+      .pipe(first())
+      .subscribe(
+        data => {
+
+          this.router.navigate(['/game']);
+        },
+        error => {
+          console.log('error');
+        });
   }
 
 }
