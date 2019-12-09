@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {GameService} from "./services/game.service";
 import {HttpClientModule} from "@angular/common/http";
+import {LoginModalService} from "./services/modal/login.modal.service";
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import {HttpClientModule} from "@angular/common/http";
     HttpClientModule
   ],
   providers: [
-    GameService
+    GameService,
+    LoginModalService,
   ]
 })
 export class CoreModule {

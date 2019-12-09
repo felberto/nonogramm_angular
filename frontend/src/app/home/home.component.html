@@ -1,12 +1,17 @@
 <h1 class="title">Nonogramm</h1>
-<div class="row">
-  <div class="column">
-    <div class="center">
-      <button [routerLink]="['/game']" class="button">Spielen</button>
-      <button [routerLink]="['/highscore']" class="button">Highscore</button>
+<br/>
+<br/>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-sm-6 col-xs-6">
+      <div class="center">
+        <button (click)="openModal()" class="button">Spielen als Benutzer</button>
+        <button [routerLink]="['/game']" class="button">Spielen als Gast</button>
+        <button [routerLink]="['/highscore']" class="button">Highscore</button>
+      </div>
     </div>
-  </div>
-  <div class="column">
-    <img alt="Nonogramm" src="assets/images/nonogramm.png">
+    <div class="col-md-6 col-sm-6 col-xs-6">
+      <img alt="Nonogramm" src="assets/images/nonogramm.png">
+    </div>
   </div>
 </div>

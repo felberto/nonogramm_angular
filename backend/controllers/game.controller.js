@@ -4,7 +4,7 @@ const Game = require('../models/game.model');
 exports.findAll = (req, res) => {
     Game.find()
         .then(games => {
-            res.send(games);
+            res.status(200).send(games);
         }).catch(err => {
         res.status(500).send({
             message: err.message || "Some error occurred while retrieving games."
@@ -15,8 +15,8 @@ exports.findAll = (req, res) => {
 // Find a single game with a game_id
 exports.findOne = (req, res) => {
     Game.findOne({'game_id': req.params.game_id})
-        .then(game => {
-            res.send(game);
+        .then(games => {
+            res.status(200).send(games);
         }).catch(err => {
         res.status(500).send({
             message: err.message || "Some error occurred while retrieving game."
@@ -28,7 +28,7 @@ exports.findOne = (req, res) => {
 exports.findAllByType = (req, res) => {
     Game.find({'type': req.params.type})
         .then(games => {
-            res.send(games);
+            res.status(200).send(games);
         }).catch(err => {
         res.status(500).send({
             message: err.message || "Some error occurred while retrieving game by type."

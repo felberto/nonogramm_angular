@@ -3,14 +3,14 @@ const Schema = mongoose.Schema;
 
 // Define collection and schema
 let UserModel = new Schema({
-    user_id: {
-        type: String
-    },
     username: {
-        type: String
+        type: String,
+        unique: true,
+        required: true,
     },
     password: {
-        type: String
+        type: String,
+        required: true,
     },
 }, {
     collection: 'users'
