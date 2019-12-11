@@ -1,0 +1,16 @@
+<nav class="navbar navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Nonogramm</a>
+  <div class="justify-content-end">
+    <ul class="nav">
+      <li *ngIf="!currentUser" class="nav-item">
+        <a class="nav-link" style="color: white">Guest</a>
+      </li>
+      <li *ngIf="currentUser" class="nav-item">
+        <a class="nav-link" style="color: white">{{currentUser.username}}</a>
+      </li>
+      <li *ngIf="currentUser" class="nav-item" style="cursor: pointer;">
+        <a (click)="logout()" class="nav-link fas fa-sign-out-alt" style="color: white;"></a>
+      </li>
+    </ul>
+  </div>
+</nav>

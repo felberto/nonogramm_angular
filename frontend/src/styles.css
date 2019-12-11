@@ -1,25 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
-html {
+@import "~@fortawesome/fontawesome-free/css/all.css";
+
+body, html {
   height: 100%;
 }
+
 body {
   height: 100%;
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   background-image: linear-gradient(to bottom right, #645E9D, #98D0C8);
   background-repeat: no-repeat;
-}
-.btn-style {
-  background: none;
-  border: 2px solid #645E9D;
-  font-size: 20px;
-  color: #645E9D;
-  padding: 0.5em 1em;
-  cursor: pointer;
-}
-.center {
-  margin: auto;
-  width: 50%;
-  padding: 1em;
-  text-align: center;
 }
