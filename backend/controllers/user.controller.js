@@ -17,7 +17,7 @@ exports.create = (req, res) => {
                     message: "User already exists."
                 });
             } else {
-                console.log("User doesnt exist")
+                console.log("User does not exist")
             }
         }
     );
@@ -25,13 +25,16 @@ exports.create = (req, res) => {
     // Create a user
     const user = new User({
         username: req.body.username || "Invalid username",
-        password: req.body.password || "Invalid password"
+        password: Buffer.from(req.body.password).toString('base64') || "Invalid password"
     });
 
     // Save user in the database
     user.save()
         .then(data => {
-            res.send(data);
+            const resUser = new User({
+                username: data.username
+            });
+            res.send(resUser);
         }).catch(err => {
         res.status(500).send({
             message: err.message || "Some error occurred while creating the user."
@@ -52,18 +55,20 @@ exports.login = (req, res) => {
     User.findOne({'username': req.body.username}).then(
         checkUser => {
             if (checkUser != null) {
-                if (req.body.password === checkUser.password) {
-                    res.send(checkUser);
+                if (req.body.password === Buffer.from(checkUser.password, 'base64').toString()) {
+                    const resUser = new User({
+                        username: req.body.username
+                    });
+                    res.send(resUser);
                 } else {
                     return res.status(401).send({
                         message: "Login failed."
                     });
                 }
-                return res.status(409).send({
-                    message: "User already exists."
-                });
             } else {
-                console.log("User doesnt exist")
+                return res.status(401).send({
+                    message: "Login failed."
+                });
             }
         }
     );

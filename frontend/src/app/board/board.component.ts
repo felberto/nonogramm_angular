@@ -11,7 +11,7 @@ enum State {
 @Component({
   selector: 'board',
   templateUrl: './board.component.html',
-  styleUrls: ['./game.component.css']
+  styleUrls: ['../game/game.component.css']
 })
 export class BoardComponent implements OnInit {
 
