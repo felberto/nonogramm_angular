@@ -6,6 +6,7 @@ import {CoreModule} from "../core/core.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {BoardComponent} from "../board/board.component";
 import {NavigationModule} from "../navigation/navigation.module";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import {NavigationModule} from "../navigation/navigation.module";
     AppRoutingModule,
     CoreModule,
     BrowserAnimationsModule,
+    NgbModule,
     NavigationModule
   ],
   entryComponents: [BoardComponent]

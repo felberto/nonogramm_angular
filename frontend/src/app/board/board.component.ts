@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, Input, OnInit} from "@angular/core";
 import {GameService} from "../core/services/game.service";
 import {Game} from "../core/models/game";
 
@@ -15,6 +15,7 @@ enum State {
 })
 export class BoardComponent implements OnInit {
 
+  @Input() level: string;
   private gameId = 0;
   private games: Game[];
   private cols;
@@ -25,7 +26,8 @@ export class BoardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.gameService.getAllByType("10x10").subscribe(res => {
+    //TODO define new function and call it; must be accessible from home component
+    this.gameService.getAllByType(this.level).subscribe(res => {
       this.games = res.body;
       this.cols = this.games[this.gameId].columns;
       this.rows = this.games[this.gameId].rows;

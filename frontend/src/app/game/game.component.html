@@ -1,2 +1,6 @@
 <navigation></navigation>
-<board></board>
+<board [level]="level"></board>
+<select (change)="loadLevel($event.target.value)" class="btn-default">
+  <option value=10x10>10x10</option>
+  <option value=15x15>15x15</option>
+</select>
