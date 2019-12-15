@@ -13,7 +13,8 @@ app.use(bodyParser.json());
 // Set CORS on express
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
     next();
 });
 
@@ -40,11 +41,14 @@ app.get('/api', (req, res) => {
     res.json({"message": "Welcome to Nonogramm application."});
 });
 
-// Require Game routes
+// Require game routes
 require('./routes/game.route')(app);
 
-// Require User routes
+// Require user routes
 require('./routes/user.route')(app);
+
+// Require save game routes
+require('./routes/savegame.route')(app);
 
 // listen for requests
 app.listen(8080, () => {

@@ -1,5 +1,5 @@
 export class Game {
-  game_id: string;
+  game_id: number;
   type: string;
   rows: number[][];
   columns: number[][];
