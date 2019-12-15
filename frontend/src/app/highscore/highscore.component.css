@@ -1,0 +1,9 @@
+h4 {
+  color: white;
+}
+
+thead > tr > th {
+  color: #645E9D;
+  font-weight: bolder;
+}
+

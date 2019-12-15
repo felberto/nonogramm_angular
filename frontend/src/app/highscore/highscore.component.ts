@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {HighscoreService} from "../core/services/highscore.service";
 
 @Component({
   selector: 'app-highscore',
@@ -7,7 +8,7 @@ import {Component, OnInit} from '@angular/core';
 })
 export class HighscoreComponent implements OnInit {
 
-  constructor() {
+  constructor(private highscoreService: HighscoreService) {
   }
 
   ngOnInit() {
