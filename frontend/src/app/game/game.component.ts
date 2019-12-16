@@ -29,9 +29,8 @@ export class GameComponent implements OnInit {
   ngOnInit() {
     window.onbeforeunload = () => this.save();
 
-    this.saveGame = new SaveGame();
-
     if (!this.currentUser) {
+      this.saveGame = new SaveGame();
       this.saveGame.type = "10x10";
       this.initBoard(false);
     } else {
@@ -81,11 +80,16 @@ export class GameComponent implements OnInit {
     this.gameService.getAllByType(this.saveGame.type).subscribe(res => {
       this.games = res.body;
       if (!stateAvailable) {
+        this.saveGame.game_id = this.games[this.gameId].game_id;
         this.cols = this.games[this.gameId].columns;
         this.rows = this.games[this.gameId].rows;
       } else {
-        this.cols = this.games[this.saveGame.game_id].columns;
-        this.rows = this.games[this.saveGame.game_id].rows;
+        for (let i = 0; i < this.games.length; i++) {
+          if (this.games[i].game_id == this.saveGame.game_id) {
+            this.cols = this.games[i].columns;
+            this.rows = this.games[i].rows;
+          }
+        }
       }
 
       // create 1D array for the row labels
@@ -153,5 +157,61 @@ export class GameComponent implements OnInit {
         this.board[i][j] = State.UNDEFINED;
         break;
     }
+
+    if (this.checkFinish()) {
+      //TODO finish
+      console.log('finished');
+    }
+  }
+
+  private checkFinish() {
+    let solution;
+
+    for (let i = 0; i < this.games.length; i++) {
+      if (this.games[i].game_id == this.saveGame.game_id) {
+        solution = this.games[i].solution;
+      }
+    }
+    let finished = true;
+
+    for (let i = 0; i < solution.length; i++) {
+      for (let j = 0; j < solution[i].length; j++) {
+        if (solution[i][j]) {
+          if (!(this.board[i][j] == State.MARKED)) {
+            finished = false;
+            break;
+          }
+        }
+      }
+    }
+
+    return finished;
+  }
+
+  private loadSolution() {
+    console.log(this.saveGame.game_id);
+    let solution;
+    for (let i = 0; i < this.games.length; i++) {
+      if (this.games[i].game_id == this.saveGame.game_id) {
+        solution = this.games[i].solution;
+      }
+    }
+
+    console.log(solution);
+
+    for (let i = 0; i < solution.length; i++) {
+      for (let j = 0; j < solution[i].length; j++) {
+        if (solution[i][j]) {
+          this.board[i][j] = State.MARKED;
+        } else {
+          this.board[i][j] = State.UNDEFINED;
+        }
+      }
+    }
+  }
+
+  private loadNext() {
+    this.gameId = ((this.gameId + 1) % 4);
+    this.initBoard(false);
   }
 }
