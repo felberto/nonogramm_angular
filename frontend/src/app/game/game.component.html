@@ -1,7 +1,7 @@
 <navigation></navigation>
 <div class="container pt-5" style="min-width: 560px;">
   <div *ngFor="let item of rows; let i=index;" class="row labelBoardRow">
-    <div class="col-3 pt-2">
+    <div class="col-3 pt-1">
       {{item}}
     </div>
     <div *ngFor="let r of cols; let j=index;" class="col" style="flex-grow: 0; padding: 0.1em;">
