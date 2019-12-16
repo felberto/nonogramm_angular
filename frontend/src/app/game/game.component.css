@@ -1,6 +1,6 @@
 .btn-style-board {
-  height: 35px;
-  width: 35px;
+  height: 25px;
+  width: 25px;
   font-weight: bold;
   background: none;
   border: 1px solid #645E9D;
@@ -18,8 +18,8 @@
   text-orientation: upright;
   flex-grow: 0;
   -webkit-box-flex: 0;
-  width: 35px;
-  padding: 1em 0.1em 0.1em 0.15em;
+  width: 25px;
+  padding: 1em 0.1em 0.1em 0.1em;
   box-sizing: unset;
   color: white;
 }
