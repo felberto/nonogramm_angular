@@ -21,6 +21,8 @@ export class GameComponent implements OnInit {
   private rows;
   private board: State[][];
   private saveGame;
+  private timeSec = 0;
+  private timeMin = 0;
 
   constructor(private authService: AuthenticationService, private gameService: GameService, private stateService: StateService) {
     this.authService.currentUser.subscribe(x => this.currentUser = x);
@@ -42,11 +44,25 @@ export class GameComponent implements OnInit {
           this.initBoard(false);
         } else {
           this.initBoard(true);
+          this.timeMin = this.saveGame.timeMin;
+          this.timeSec = this.saveGame.timeSec;
           this.stateService.delete(this.currentUser.username).subscribe(res => {
           });
         }
       });
     }
+    this.startTimer();
+  }
+
+  startTimer() {
+    this.timeSec = setInterval(() => {
+      if (this.timeSec == 59) {
+        this.timeMin++;
+        this.timeSec = 0;
+      } else {
+        this.timeSec++;
+      }
+    }, 1000)
   }
 
   loadLevel(value: any) {
@@ -59,8 +75,8 @@ export class GameComponent implements OnInit {
       let saveGame = new SaveGame();
       saveGame.username = this.currentUser.username;
       saveGame.game_id = this.games[this.gameId].game_id;
-      //TODO implement timer
-      saveGame.time = 0;
+      saveGame.timeSec = this.timeSec;
+      saveGame.timeMin = this.timeMin;
       saveGame.type = this.saveGame.type;
       saveGame.buttons = this.board;
 
