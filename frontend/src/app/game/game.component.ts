@@ -51,7 +51,7 @@ export class GameComponent implements OnInit {
 
   loadLevel(value: any) {
     this.saveGame.type = value;
-    //TODO if changed, call function for create board with selected level
+    this.initBoard(false);
   }
 
   save() {
