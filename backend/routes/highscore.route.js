@@ -8,5 +8,5 @@ module.exports = (app) => {
     app.get('/api/highscore/type/:type', highscoreController.findAllByType);
 
     // Create highscore
-    app.post('/api/highscore/', userController.create);
+    app.post('/api/highscore/', highscoreController.create);
 };
