@@ -32,7 +32,9 @@ exports.create = (req, res) => {
     // Save highscore in the database
     highscore.save()
         .then(data => {
-            res.send(highscore);
+            res.status(200).json({
+                message: 'Saved!'
+            });
         }).catch(err => {
         res.status(500).send({
             message: err.message || "Some error occurred while creating the highscore."

@@ -195,7 +195,6 @@ export class GameComponent implements OnInit {
     }
 
     if (this.checkFinish()) {
-      //TODO finish
       clearInterval(this.timer);
       if (!this.currentUser) {
         // alert
@@ -203,9 +202,6 @@ export class GameComponent implements OnInit {
         this.saveHighscore();
         this.timeSec = 0;
         this.timeMin = 0;
-        // delete current game
-        // this.stateService.delete(this.currentUser.username).subscribe(res => {
-        // });
       }
       console.log('finished');
     }

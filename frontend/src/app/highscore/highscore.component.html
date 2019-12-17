@@ -12,20 +12,14 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>10:30</td>
+        <tr *ngIf="scores10x10?.length == 0">
+          <th></th>
+          <th>Noch keine Highscores!</th>
         </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>12:00</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>Larry</td>
-          <td>22:55</td>
+        <tr *ngFor="let item of scores10x10; let i = index;">
+          <th scope="row">{{i + 1}}</th>
+          <td>{{item.username}}</td>
+          <td>{{item.time}}</td>
         </tr>
         </tbody>
       </table>
@@ -41,10 +35,14 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>10:30</td>
+        <tr *ngIf="scores15x15?.length == 0">
+          <th></th>
+          <th>Noch keine Highscores!</th>
+        </tr>
+        <tr *ngFor="let item of scores15x15; let j = index;">
+          <th scope="row">{{j + 1}}</th>
+          <td>{{item.username}}</td>
+          <td>{{item.time}}</td>
         </tr>
         </tbody>
       </table>
