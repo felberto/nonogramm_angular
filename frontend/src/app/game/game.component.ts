@@ -6,6 +6,8 @@ import {StateService} from "../core/services/state.service";
 import {SaveGame} from "../core/models/save-game";
 import {Game} from "../core/models/game";
 import {State} from "../core/models/state";
+import {Highscore} from "../core/models/highscore";
+import {HighscoreService} from "../core/services/highscore.service";
 
 @Component({
   selector: 'app-game',
@@ -23,8 +25,10 @@ export class GameComponent implements OnInit {
   private saveGame;
   private timeSec = 0;
   private timeMin = 0;
+  private timer;
 
-  constructor(private authService: AuthenticationService, private gameService: GameService, private stateService: StateService) {
+  constructor(private authService: AuthenticationService, private gameService: GameService,
+              private stateService: StateService, private highscoreService: HighscoreService) {
     this.authService.currentUser.subscribe(x => this.currentUser = x);
   }
 
@@ -55,7 +59,7 @@ export class GameComponent implements OnInit {
   }
 
   startTimer() {
-    this.timeSec = setInterval(() => {
+    this.timer = setInterval(() => {
       if (this.timeSec == 59) {
         this.timeMin++;
         this.timeSec = 0;
@@ -90,6 +94,22 @@ export class GameComponent implements OnInit {
     } else {
       // Nothing to save
     }
+  }
+
+  saveHighscore() {
+    let highscore = new Highscore();
+    highscore.username = this.currentUser.username;
+    let sec = this.timeSec > 9 ? "" + this.timeSec : "0" + this.timeSec;
+    let min = this.timeMin > 9 ? "" + this.timeMin : "0" + this.timeMin;
+    highscore.time = "" + min + ":" + sec;
+    highscore.type = this.saveGame.type;
+
+    this.highscoreService.save(highscore)
+      .subscribe(data => {
+        console.log('sucess: save highscore');
+      }, err => {
+        console.log('error: save highscore');
+      })
   }
 
   private initBoard(stateAvailable: boolean) {
@@ -176,6 +196,17 @@ export class GameComponent implements OnInit {
 
     if (this.checkFinish()) {
       //TODO finish
+      clearInterval(this.timer);
+      if (!this.currentUser) {
+        // alert
+      } else {
+        this.saveHighscore();
+        this.timeSec = 0;
+        this.timeMin = 0;
+        // delete current game
+        // this.stateService.delete(this.currentUser.username).subscribe(res => {
+        // });
+      }
       console.log('finished');
     }
   }

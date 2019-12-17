@@ -24,21 +24,15 @@ exports.findAllByType = (req, res) => {
     });
 };
 
+// create highscore
 exports.create = (req, res) => {
     // Create highscore
-    const highscore = new Highscore({
-        username: req.body.username || "Invalid username",
-        time: req.body.time || "Invalid time",
-        type: req.body.type || "Invalid type"
-    });
+    let highscore = new Highscore(req.body);
 
     // Save highscore in the database
     highscore.save()
         .then(data => {
-            const resHighscore = new User({
-                username: data.username
-            });
-            res.send(resHighscore);
+            res.send(highscore);
         }).catch(err => {
         res.status(500).send({
             message: err.message || "Some error occurred while creating the highscore."
