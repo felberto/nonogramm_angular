@@ -1,0 +1,21 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Nonogramm</a>
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+      <a class="nav-link" href="/tutorial" style="color: lightgray;">Tutorial</a>
+    </li>
+  </ul>
+  <div>
+    <ul class="nav">
+      <li *ngIf="!currentUser" class="nav-item">
+        <a class="nav-link" style="color: lightgray;">Guest</a>
+      </li>
+      <li *ngIf="currentUser" class="nav-item">
+        <a class="nav-link" style="color: lightgray;">{{currentUser.username}}</a>
+      </li>
+      <li *ngIf="currentUser" class="nav-item" style="cursor: pointer;">
+        <a (click)="logout()" class="nav-link fas fa-sign-out-alt" style="color: lightgray; padding-top: 0.75em;"></a>
+      </li>
+    </ul>
+  </div>
+</nav>

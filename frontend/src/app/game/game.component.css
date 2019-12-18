@@ -1,0 +1,52 @@
+.btn-style-board {
+  height: 27px;
+  width: 27px;
+  font-weight: bold;
+  background: none;
+  border: 1px solid #645E9D;
+  color: #645E9D;
+  cursor: pointer;
+  outline: none;
+}
+
+.btn-marked {
+  background: #645E9D;
+}
+
+.labelBoardColumn {
+  flex-grow: 0;
+  width: 27px;
+  padding-left: 0.4em;
+  margin: 0 0.1em 0 0.1em;
+  color: white;
+  word-wrap: break-spaces;
+}
+
+.labelBoardRow {
+  text-align: right;
+  letter-spacing: 0.20em;
+  color: white;
+  padding-right: 0.2em;
+  padding-top: 0.1em;
+}
+
+.button {
+  width: 100%;
+  color: #645E9D;
+  border: 0.2vw solid #645E9D;
+  padding: 3%;
+  margin: 3% 0 3% 0;
+  font-size: 2.5vh;
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+}
+
+.button:hover {
+  background-color: #645E9D;
+  color: white;
+}

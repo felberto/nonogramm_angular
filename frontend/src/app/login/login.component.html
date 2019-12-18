@@ -1,0 +1,41 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-title">Benutzer</h4>
+  <button (click)="activeModal.dismiss('Cross click')" aria-describedby="modal-title" class="close" type="button">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <form [formGroup]="userForm">
+        <div class="form-group">
+          <label for="username">Benutzername</label>
+          <input [ngClass]="{ 'is-invalid': submitted && f.username.errors }" class="form-control"
+                 formControlName="username"
+                 type="text"/>
+          <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+            <div *ngIf="f.username.errors.required">Username is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password">Passwort</label>
+          <input [ngClass]="{ 'is-invalid': submitted && f.password.errors }" class="form-control"
+                 formControlName="password"
+                 type="password"/>
+          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required">Password is required</div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="modal-footer d-block">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <button (click)="login()" class="btn btn-primary mr-2" type="button">Anmelden</button>
+      <button (click)="register()" class="btn btn-outline-secondary" type="button">Registrieren
+      </button>
+    </div>
+  </div>
+</div>
