@@ -70,6 +70,10 @@ export class GameComponent implements OnInit {
   }
 
   loadLevel(value: any) {
+    this.timeSec = 0;
+    this.timeMin = 0;
+    clearInterval(this.timer);
+    this.startTimer();
     this.saveGame.type = value;
     this.initBoard(false);
   }
@@ -260,5 +264,16 @@ export class GameComponent implements OnInit {
     this.startTimer();
     this.gameId = ((this.gameId + 1) % 4);
     this.initBoard(false);
+  }
+
+  private reset() {
+    this.timeSec = 0;
+    this.timeMin = 0;
+    clearInterval(this.timer);
+    this.startTimer();
+    let rowLength = this.rows.length;
+    let colLength = this.cols.length;
+
+    this.board = new Array(rowLength).fill(State.UNDEFINED).map(() => new Array(colLength).fill(State.UNDEFINED));
   }
 }

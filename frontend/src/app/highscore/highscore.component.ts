@@ -24,7 +24,6 @@ export class HighscoreComponent implements OnInit {
     this.highscoreService.getAllByType("15x15").subscribe(res => {
       this.scores15x15 = res.body;
       this.scores15x15.sort((a, b) => (a.time > b.time) ? 1 : ((b.time > a.time) ? -1 : 0));
-      console.log(this.scores15x15);
     });
   }
 
