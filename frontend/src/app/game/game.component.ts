@@ -8,6 +8,7 @@ import {Game} from "../core/models/game";
 import {State} from "../core/models/state";
 import {Highscore} from "../core/models/highscore";
 import {HighscoreService} from "../core/services/highscore.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-game',
@@ -28,7 +29,7 @@ export class GameComponent implements OnInit {
   private timer;
 
   constructor(private authService: AuthenticationService, private gameService: GameService,
-              private stateService: StateService, private highscoreService: HighscoreService) {
+              private stateService: StateService, private highscoreService: HighscoreService, private toastr: ToastrService) {
     this.authService.currentUser.subscribe(x => this.currentUser = x);
   }
 
@@ -201,8 +202,13 @@ export class GameComponent implements OnInit {
     if (this.checkFinish()) {
       clearInterval(this.timer);
       if (!this.currentUser) {
-        // alert
+        this.toastr.success("Nonogramm gelöst!", "", {
+          positionClass: "toast-bottom-right"
+        });
       } else {
+        this.toastr.success("Nonogramm gelöst!", "", {
+          positionClass: "toast-bottom-right"
+        });
         this.saveHighscore();
         this.timeSec = 0;
         this.timeMin = 0;
