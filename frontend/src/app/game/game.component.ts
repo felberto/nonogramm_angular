@@ -231,6 +231,10 @@ export class GameComponent implements OnInit {
   }
 
   private loadSolution() {
+    this.timeSec = 0;
+    this.timeMin = 0;
+    clearInterval(this.timer);
+
     let solution;
     for (let i = 0; i < this.games.length; i++) {
       if (this.games[i].game_id == this.saveGame.game_id) {
