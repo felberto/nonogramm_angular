@@ -25,9 +25,14 @@
       <p style="color: #645E9D; font-size: 2.5vh; display: inline-block; width: 30%;">
         Level:
       </p>
-      <select (change)="loadLevel($event.target.value)" class="button" style="width: 70%;">
-        <option value=10x10>10x10</option>
-        <option value=15x15>15x15</option>
+      <select
+        (change)="loadLevel(saveGame.type)"
+        [(ngModel)]="saveGame.type"
+        class="form-control button"
+        id="type"
+        name="type"
+        style="width: 70%;">
+        <option *ngFor="let type of types" [value]="type.label">{{ type.label }}</option>
       </select>
       <button (click)="loadSolution()" class="button mt-4">Lösung anzeigen</button>
       <button (click)="reset()" class="button mt-4">Reset</button>

@@ -17,6 +17,11 @@ import {ToastrService} from "ngx-toastr";
 })
 export class GameComponent implements OnInit {
 
+  types = [
+    {label: "10x10"},
+    {label: "15x15"}
+  ];
+
   currentUser: User;
   private gameId = 0;
   private games: Game[];
@@ -38,19 +43,16 @@ export class GameComponent implements OnInit {
 
     if (!this.currentUser) {
       this.saveGame = new SaveGame();
-      this.saveGame.type = "10x10";
+      this.saveGame.type = this.types[0].label;
       this.initBoard(false);
     } else {
       this.stateService.getByUser(this.currentUser.username).subscribe(res => {
         this.saveGame = res.body;
-        console.log('46' + this.saveGame.game_id);
         if (res.body == undefined) {
           this.saveGame = new SaveGame();
-          this.saveGame.type = "10x10";
+          this.saveGame.type = this.types[0].label;
           this.initBoard(false);
-          console.log('51' + this.saveGame.game_id);
         } else {
-          console.log('53' + this.saveGame.game_id);
           this.initBoard(true);
           this.timeMin = this.saveGame.timeMin;
           this.timeSec = this.saveGame.timeSec;
@@ -79,7 +81,6 @@ export class GameComponent implements OnInit {
     clearInterval(this.timer);
     this.startTimer();
     this.saveGame.type = value;
-    console.log('82' + this.saveGame.game_id);
     this.initBoard(false);
   }
 
@@ -124,18 +125,15 @@ export class GameComponent implements OnInit {
   private initBoard(stateAvailable: boolean) {
     this.gameService.getAllByType(this.saveGame.type).subscribe(res => {
       this.games = res.body;
-      console.log('127' + this.saveGame.game_id);
       if (!stateAvailable) {
         this.saveGame.game_id = this.games[this.gameId].game_id;
         this.cols = this.games[this.gameId].columns;
         this.rows = this.games[this.gameId].rows;
-        console.log('132' + this.saveGame.game_id);
       } else {
         for (let i = 0; i < this.games.length; i++) {
           if (this.games[i].game_id == this.saveGame.game_id) {
             this.cols = this.games[i].columns;
             this.rows = this.games[i].rows;
-            console.log('138' + this.saveGame.game_id);
           }
         }
       }
@@ -271,13 +269,11 @@ export class GameComponent implements OnInit {
   }
 
   private loadNext() {
-    console.log('274' + this.saveGame.game_id);
     this.timeSec = 0;
     this.timeMin = 0;
     clearInterval(this.timer);
     this.startTimer();
     this.gameId = ((this.gameId + 1) % 4);
-    console.log('280' + this.saveGame.game_id);
     this.initBoard(false);
   }
 
