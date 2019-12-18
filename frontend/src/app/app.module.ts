@@ -10,6 +10,7 @@ import {HighscoreModule} from "./highscore/highscore.module";
 import {GameModule} from "./game/game.module";
 import {HomeModule} from "./home/home.module";
 import {FormsModule} from "@angular/forms";
+import {ToastrModule} from "ngx-toastr";
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import {FormsModule} from "@angular/forms";
     LoginModule,
     HomeModule,
     HighscoreModule,
-    GameModule
+    GameModule,
+    ToastrModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

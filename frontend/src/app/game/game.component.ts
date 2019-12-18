@@ -6,6 +6,9 @@ import {StateService} from "../core/services/state.service";
 import {SaveGame} from "../core/models/save-game";
 import {Game} from "../core/models/game";
 import {State} from "../core/models/state";
+import {Highscore} from "../core/models/highscore";
+import {HighscoreService} from "../core/services/highscore.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-game',
@@ -14,6 +17,11 @@ import {State} from "../core/models/state";
 })
 export class GameComponent implements OnInit {
 
+  types = [
+    {label: "10x10"},
+    {label: "15x15"}
+  ];
+
   currentUser: User;
   private gameId = 0;
   private games: Game[];
@@ -21,8 +29,12 @@ export class GameComponent implements OnInit {
   private rows;
   private board: State[][];
   private saveGame;
+  private timeSec = 0;
+  private timeMin = 0;
+  private timer;
 
-  constructor(private authService: AuthenticationService, private gameService: GameService, private stateService: StateService) {
+  constructor(private authService: AuthenticationService, private gameService: GameService,
+              private stateService: StateService, private highscoreService: HighscoreService, private toastr: ToastrService) {
     this.authService.currentUser.subscribe(x => this.currentUser = x);
   }
 
@@ -31,25 +43,43 @@ export class GameComponent implements OnInit {
 
     if (!this.currentUser) {
       this.saveGame = new SaveGame();
-      this.saveGame.type = "10x10";
+      this.saveGame.type = this.types[0].label;
       this.initBoard(false);
     } else {
       this.stateService.getByUser(this.currentUser.username).subscribe(res => {
         this.saveGame = res.body;
         if (res.body == undefined) {
           this.saveGame = new SaveGame();
-          this.saveGame.type = "10x10";
+          this.saveGame.type = this.types[0].label;
           this.initBoard(false);
         } else {
           this.initBoard(true);
+          this.timeMin = this.saveGame.timeMin;
+          this.timeSec = this.saveGame.timeSec;
           this.stateService.delete(this.currentUser.username).subscribe(res => {
           });
         }
       });
     }
+    this.startTimer();
+  }
+
+  startTimer() {
+    this.timer = setInterval(() => {
+      if (this.timeSec == 59) {
+        this.timeMin++;
+        this.timeSec = 0;
+      } else {
+        this.timeSec++;
+      }
+    }, 1000)
   }
 
   loadLevel(value: any) {
+    this.timeSec = 0;
+    this.timeMin = 0;
+    clearInterval(this.timer);
+    this.startTimer();
     this.saveGame.type = value;
     this.initBoard(false);
   }
@@ -58,9 +88,9 @@ export class GameComponent implements OnInit {
     if (this.currentUser) {
       let saveGame = new SaveGame();
       saveGame.username = this.currentUser.username;
-      saveGame.game_id = this.games[this.gameId].game_id;
-      //TODO implement timer
-      saveGame.time = 0;
+      saveGame.game_id = this.saveGame.game_id;
+      saveGame.timeSec = this.timeSec;
+      saveGame.timeMin = this.timeMin;
       saveGame.type = this.saveGame.type;
       saveGame.buttons = this.board;
 
@@ -74,6 +104,22 @@ export class GameComponent implements OnInit {
     } else {
       // Nothing to save
     }
+  }
+
+  saveHighscore() {
+    let highscore = new Highscore();
+    highscore.username = this.currentUser.username;
+    let sec = this.timeSec > 9 ? "" + this.timeSec : "0" + this.timeSec;
+    let min = this.timeMin > 9 ? "" + this.timeMin : "0" + this.timeMin;
+    highscore.time = "" + min + ":" + sec;
+    highscore.type = this.saveGame.type;
+
+    this.highscoreService.save(highscore)
+      .subscribe(data => {
+        console.log('sucess: save highscore');
+      }, err => {
+        console.log('error: save highscore');
+      })
   }
 
   private initBoard(stateAvailable: boolean) {
@@ -159,8 +205,19 @@ export class GameComponent implements OnInit {
     }
 
     if (this.checkFinish()) {
-      //TODO finish
-      console.log('finished');
+      clearInterval(this.timer);
+      if (!this.currentUser) {
+        this.toastr.success("Nonogramm gelöst!", "", {
+          positionClass: "toast-bottom-right"
+        });
+      } else {
+        this.toastr.success("Nonogramm gelöst!", "", {
+          positionClass: "toast-bottom-right"
+        });
+        this.saveHighscore();
+        this.timeSec = 0;
+        this.timeMin = 0;
+      }
     }
   }
 
@@ -189,15 +246,16 @@ export class GameComponent implements OnInit {
   }
 
   private loadSolution() {
-    console.log(this.saveGame.game_id);
+    this.timeSec = 0;
+    this.timeMin = 0;
+    clearInterval(this.timer);
+
     let solution;
     for (let i = 0; i < this.games.length; i++) {
       if (this.games[i].game_id == this.saveGame.game_id) {
         solution = this.games[i].solution;
       }
     }
-
-    console.log(solution);
 
     for (let i = 0; i < solution.length; i++) {
       for (let j = 0; j < solution[i].length; j++) {
@@ -211,7 +269,22 @@ export class GameComponent implements OnInit {
   }
 
   private loadNext() {
+    this.timeSec = 0;
+    this.timeMin = 0;
+    clearInterval(this.timer);
+    this.startTimer();
     this.gameId = ((this.gameId + 1) % 4);
     this.initBoard(false);
+  }
+
+  private reset() {
+    this.timeSec = 0;
+    this.timeMin = 0;
+    clearInterval(this.timer);
+    this.startTimer();
+    let rowLength = this.rows.length;
+    let colLength = this.cols.length;
+
+    this.board = new Array(rowLength).fill(State.UNDEFINED).map(() => new Array(colLength).fill(State.UNDEFINED));
   }
 }

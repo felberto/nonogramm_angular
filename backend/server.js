@@ -50,6 +50,9 @@ require('./routes/user.route')(app);
 // Require save game routes
 require('./routes/savegame.route')(app);
 
+// Require highscore routes
+require('./routes/highscore.route')(app);
+
 // listen for requests
 app.listen(8080, () => {
     console.log("Server is listening on port 8080");

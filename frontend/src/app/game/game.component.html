@@ -1,24 +1,43 @@
 <navigation></navigation>
-<div class="container pt-5" style="min-width: 560px;">
-  <div *ngFor="let item of rows; let i=index;" class="row labelBoardRow">
-    <div class="col-3 pt-1">
-      {{item}}
-    </div>
-    <div *ngFor="let r of cols; let j=index;" class="col" style="flex-grow: 0; padding: 0.1em;">
-      <button (click)="clickButton(i,j)" [ngClass]="{'btn-marked': board[i][j] == 1}" class="btn-style-board"
-              value="{{i}},{{j}}">{{board[i][j] == 2 ? 'X' : ''}}</button>
-    </div>
-  </div>
+<div class="container pt-3" style="min-width: 560px;">
   <div class="row">
-    <div class="col-3"></div>
-    <div *ngFor="let item of cols" class="labelBoardColumn">
-      {{item}}
+    <div class="col-md-9">
+      <div *ngFor="let item of rows; let i=index;" class="row">
+        <div class="col-3 labelBoardRow">
+          {{item}}
+        </div>
+        <div *ngFor="let r of cols; let j=index;" class="col" style="flex-grow: 0; padding: 0.1em 0.1em 0 0.1em;">
+          <button (click)="clickButton(i,j)" [ngClass]="{'btn-marked': board[i][j] == 1}" class="btn-style-board"
+                  value="{{i}},{{j}}">{{board[i][j] == 2 ? 'X' : ''}}</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-3"></div>
+        <div *ngFor="let item of cols" class="labelBoardColumn">
+          {{item}}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <p class="mb-5" style="color: white; font-size: 2.5vh;">
+        Time: {{timeMin | number: '2.0-0'}}:{{timeSec| number: '2.0-0'}}
+      </p>
+      <p style="color: #645E9D; font-size: 2.5vh; display: inline-block; width: 30%;">
+        Level:
+      </p>
+      <select
+        (change)="loadLevel(saveGame.type)"
+        [(ngModel)]="saveGame.type"
+        class="form-control button"
+        id="type"
+        name="type"
+        style="width: 70%;">
+        <option *ngFor="let type of types" [value]="type.label">{{ type.label }}</option>
+      </select>
+      <button (click)="loadSolution()" class="button mt-4">Lösung anzeigen</button>
+      <button (click)="reset()" class="button mt-4">Reset</button>
+      <button (click)="loadNext()" class="button">Nächstes Spiel</button>
     </div>
   </div>
 </div>
-<select (change)="loadLevel($event.target.value)" class="btn-default">
-  <option value=10x10>10x10</option>
-  <option value=15x15>15x15</option>
-</select>
-<button (click)="loadSolution()">Lösung anzeigen</button>
-<button (click)="loadNext()">Next</button>
+

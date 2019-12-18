@@ -18,7 +18,8 @@ exports.save = (req, res) => {
         {
             username: req.body.username,
             game_id: req.body.game_id,
-            time: req.body.time,
+            timeSec: req.body.timeSec,
+            timeMin: req.body.timeMin,
             type: req.body.type,
             buttons: req.body.buttons,
         }

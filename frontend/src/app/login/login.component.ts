@@ -5,6 +5,7 @@ import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {UserService} from "../core/services/user.service";
 import {first} from "rxjs/operators";
 import {AuthenticationService} from "../core/services/authentication.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
   userForm: FormGroup;
   submitted = false;
 
-  constructor(public activeModal: NgbActiveModal, private formBuilder: FormBuilder, private router: Router, private userService: UserService, private authService: AuthenticationService) {
+  constructor(public activeModal: NgbActiveModal, private toastr: ToastrService, private formBuilder: FormBuilder, private router: Router, private userService: UserService, private authService: AuthenticationService) {
 
   }
 
@@ -39,10 +40,11 @@ export class LoginComponent implements OnInit {
             this.activeModal.dismiss();
             this.router.navigate(['/game']);
           } else {
-
           }
         }, err => {
-          console.log('error')
+          this.toastr.error("Login fehlgeschlagen", "", {
+            positionClass: "toast-bottom-right"
+          });
         }
       )
   }
@@ -59,11 +61,15 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          this.router.navigate(['/game']);
-          this.activeModal.close();
+          this.toastr.success("Registration erfolgreich", "", {
+            positionClass: "toast-bottom-right"
+          });
+          this.login();
         },
         error => {
-          console.log('error');
+          this.toastr.error("Registration fehlgeschlagen", "", {
+            positionClass: "toast-bottom-right"
+          });
         });
   }
 

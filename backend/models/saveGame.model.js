@@ -9,7 +9,10 @@ let SaveGameModel = new Schema({
     game_id: {
         type: Number
     },
-    time: {
+    timeSec: {
+        type: Number
+    },
+    timeMin: {
         type: Number
     },
     type: {
