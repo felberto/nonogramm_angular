@@ -64,8 +64,7 @@ export class LoginComponent implements OnInit {
           this.toastr.success("Registration erfolgreich", "", {
             positionClass: "toast-bottom-right"
           });
-          this.router.navigate(['/game']);
-          this.activeModal.close();
+          this.login();
         },
         error => {
           this.toastr.error("Registration fehlgeschlagen", "", {
