@@ -203,7 +203,6 @@ export class GameComponent implements OnInit {
         this.timeSec = 0;
         this.timeMin = 0;
       }
-      console.log('finished');
     }
   }
 
@@ -232,15 +231,12 @@ export class GameComponent implements OnInit {
   }
 
   private loadSolution() {
-    console.log(this.saveGame.game_id);
     let solution;
     for (let i = 0; i < this.games.length; i++) {
       if (this.games[i].game_id == this.saveGame.game_id) {
         solution = this.games[i].solution;
       }
     }
-
-    console.log(solution);
 
     for (let i = 0; i < solution.length; i++) {
       for (let j = 0; j < solution[i].length; j++) {
@@ -254,6 +250,10 @@ export class GameComponent implements OnInit {
   }
 
   private loadNext() {
+    this.timeSec = 0;
+    this.timeMin = 0;
+    clearInterval(this.timer);
+    this.startTimer();
     this.gameId = ((this.gameId + 1) % 4);
     this.initBoard(false);
   }
